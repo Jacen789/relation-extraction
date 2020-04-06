@@ -63,24 +63,24 @@ def train(hparams):
 
     for epoch in range(epoch_offset, epochs):
         print("Epoch: {}".format(epoch))
-        # model.train()
-        # for i_batch, sample_batched in enumerate(tqdm(train_loader, desc='Training')):
-        #     token_ids = sample_batched['token_ids'].to(device)
-        #     token_type_ids = sample_batched['token_type_ids'].to(device)
-        #     attention_mask = sample_batched['attention_mask'].to(device)
-        #     e1_mask = sample_batched['e1_mask'].to(device)
-        #     e2_mask = sample_batched['e2_mask'].to(device)
-        #     tag_ids = sample_batched['tag_id'].to(device)
-        #     model.zero_grad()
-        #     logits = model(token_ids, token_type_ids, attention_mask, e1_mask, e2_mask)
-        #     loss = criterion(logits, tag_ids)
-        #     loss.backward()
-        #     optimizer.step()
-        #
-        #     running_loss += loss.item()
-        #     if i_batch % 10 == 9:
-        #         writer.add_scalar('Training/training loss', running_loss / 10, epoch * len(train_loader) + i_batch)
-        #         running_loss = 0.0
+        model.train()
+        for i_batch, sample_batched in enumerate(tqdm(train_loader, desc='Training')):
+            token_ids = sample_batched['token_ids'].to(device)
+            token_type_ids = sample_batched['token_type_ids'].to(device)
+            attention_mask = sample_batched['attention_mask'].to(device)
+            e1_mask = sample_batched['e1_mask'].to(device)
+            e2_mask = sample_batched['e2_mask'].to(device)
+            tag_ids = sample_batched['tag_id'].to(device)
+            model.zero_grad()
+            logits = model(token_ids, token_type_ids, attention_mask, e1_mask, e2_mask)
+            loss = criterion(logits, tag_ids)
+            loss.backward()
+            optimizer.step()
+        
+            running_loss += loss.item()
+            if i_batch % 10 == 9:
+                writer.add_scalar('Training/training loss', running_loss / 10, epoch * len(train_loader) + i_batch)
+                running_loss = 0.0
 
         if validation_file:
             validation_dataset = SentenceREDataset(validation_file, tagset_path=tagset_file,
