@@ -24,9 +24,6 @@ parser.add_argument("--checkpoint_file", type=str, default=default_checkpoint_fi
 
 # model
 parser.add_argument('--embedding_dim', type=int, default=768, required=False, help='embedding_dim')
-parser.add_argument('--rnn_hidden_dim', type=int, default=256, required=False, help='rnn_hidden_dim')
-parser.add_argument('--rnn_num_layers', type=int, default=1, required=False, help='rnn_num_layers')
-parser.add_argument('--rnn_bidirectional', type=bool, default=True, required=False, help='rnn_bidirectional')
 parser.add_argument('--dropout', type=float, default=0.1, required=False, help='dropout')
 
 parser.add_argument('--device', type=str, default='cuda')
